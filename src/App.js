@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Todo from "./component/Todo";
 
 function App() {
 
@@ -12,11 +13,23 @@ function handleChange(event)
 }
 function addItem()
 {
-  setItems((prevItems)=>
+  setItems(prevItems=>
   {
     return [...prevItems,inputText]
   });
   setInputText("");}
+
+  function deleted(id){
+    setItems(prevItems=>{
+      return prevItems.filter(
+        (item,index)=>{
+          return index !==id
+
+        }
+      )
+
+    });
+  }
 
   return (
     
@@ -35,8 +48,13 @@ function addItem()
         </button>
       </div>
       <div>
+        
         <ul>
-        {  items.map(todoItem => <li>{todoItem}</li>)}
+        {  items.map((todoItem,index) =>
+          ( <Todo  key={index} id={index} text={todoItem}
+            onChecked={deleted}/>
+          
+          ))}
         </ul>
       </div>
     </div>
